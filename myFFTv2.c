@@ -2,7 +2,7 @@
 // FFT version 2 
 // Usage:
 // to complie: gcc -lm myFFTv2.c -o fft2
-// to run:     ./fft test32.txt 32 2
+// to run:     ./fft2 test32.txt 32 2
 // FFT output in outFFT.txt
 
 

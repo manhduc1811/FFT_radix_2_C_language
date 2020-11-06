@@ -2,7 +2,7 @@
 // FFT version 4
 // Usage:
 // to complie: gcc -lm myFFTv4.c -o fft4
-// to run:     ./fft test32.txt 32 2
+// to run:     ./fft4 test32.txt 32 2
 // FFT output in outFFT_real, outFFT_image
 // Radix 2
 #include <stdio.h>

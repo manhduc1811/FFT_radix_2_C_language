@@ -2,7 +2,7 @@
 // FFT version 5
 // Usage:
 // to complie: gcc -lm myFFTv5.c -o fft5
-// to run:     ./fft test32.txt 32 2
+// to run:     ./fft5 test32.txt 32
 // FFT output in outFFT_real, outFFT_image
 // Radix-4 algorithm
 

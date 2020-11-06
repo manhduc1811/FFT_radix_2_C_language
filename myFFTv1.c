@@ -1,10 +1,9 @@
 // mducng, SoC, D2D, g2touch
 // FFT version 1 
 // Usage:
-// to complie: fft [input file] [sequence length] [radix]
+// to complie: gcc -lm myFFTv1.c -o fft1
 // to run:     ./fft test32.txt 32 2
 // FFT output as Abs
-
 
 #include <stdio.h>
 #include <stdlib.h>

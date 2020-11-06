@@ -1,7 +1,7 @@
 // mducng, SoC, D2D, g2touch
 // FFT version 4
 // Usage:
-// to complie: fft [input file] [sequence length] [radix]
+// to complie: gcc -lm myFFTv4.c -o fft4
 // to run:     ./fft test32.txt 32 2
 // FFT output in outFFT_real, outFFT_image
 // Radix 2

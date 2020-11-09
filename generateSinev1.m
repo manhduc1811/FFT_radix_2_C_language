@@ -18,5 +18,6 @@ stem(f,y);
 subplot(3,1,3);
 stem(f,imag(y));
 
-xINT
-y
+x
+xINT;
+y;

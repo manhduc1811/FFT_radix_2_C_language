@@ -1,7 +1,7 @@
 clc;
 clear;
 clear all;
-N     =  64;
+N     =  1024;
 n     =  (0:1:N-1);
 fs    =  48000;
 f1    =  2000;
@@ -18,5 +18,5 @@ stem(f,y);
 subplot(3,1,3);
 stem(f,imag(y));
 
-xINT
-y;
+xINT;
+y

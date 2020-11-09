@@ -1,10 +1,3 @@
-// mducng, SoC, D2D, g2touch
-// FFT version 1 
-// Usage:
-// to complie: gcc -lm myFFTv1.c -o fft1
-// to run:     ./fft test32.txt 32 2
-// FFT output as Abs
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -38,19 +31,19 @@ void bit_reverse_reorder(struct complex *W, int N)
 
     for (i=0; i<N; i++)
     {
-		j=0;
-		for (k=0; k<bits; k++)
-			if (i&pow_2[k]) j+=pow_2[bits-k-1];
+	j=0;
+	for (k=0; k<bits; k++)
+	    if (i&pow_2[k]) j+=pow_2[bits-k-1];
 
-		if (j>i)  /** Only make "up" swaps */
-		{
-			tempr=W[i].r;
-			tempi=W[i].i;
-			W[i].r=W[j].r;
-			W[i].i=W[j].i;
-			W[j].r=tempr;
-			W[j].i=tempi;
-		}
+	if (j>i)  /** Only make "up" swaps */
+	{
+	    tempr=W[i].r;
+	    tempi=W[i].i;
+	    W[i].r=W[j].r;
+	    W[i].i=W[j].i;
+	    W[j].r=tempr;
+	    W[j].i=tempi;
+	}
     }
 }
 void bit_r4_reorder(struct complex *W, int N)
@@ -166,7 +159,30 @@ void main(int argc, char *argv[])
     int    N, radix, numsamp;
     int    i;
     struct complex *data;
+    double freq, phase, fs, A;
+    int    dotime;
+    struct timeval start, end;
+    long   totaltime;
     
+#ifdef GEN
+    if (argc!=9)
+    {
+	printf("usage:\n");
+	printf("    fft [A] [f] [phase] [fs] [num samp] [sequence length] [radix] [time]\n");
+	printf("        output: DFT\n");
+	exit(1);
+    }
+    
+    
+    sscanf(argv[1], "%lf", &A);
+    sscanf(argv[2], "%lf", &freq);
+    sscanf(argv[3], "%lf", &phase);
+    sscanf(argv[4], "%lf", &fs);
+    sscanf(argv[5], "%d", &numsamp);
+    sscanf(argv[6], "%d", &N);
+    sscanf(argv[7], "%d", &radix);
+    sscanf(argv[8], "%d", &dotime);
+#endif
 #ifndef GEN
     if (argc<4)
     {
@@ -183,7 +199,9 @@ void main(int argc, char *argv[])
     
     sscanf(argv[2], "%d", &N);
     sscanf(argv[3], "%d", &radix);
+    dotime=0;
 #endif
+
 
     /** Set up power of two arrays */
     pow_2[0]=1;
@@ -198,7 +216,17 @@ void main(int argc, char *argv[])
 	fprintf(stderr, "Out of memory!\n");
 	exit(1);
     }
-
+    
+    /** Generate cosine **/
+#ifdef GEN
+    for (i=0; i<N; i++)
+    {
+	data[i].r=0.0;
+	data[i].i=0.0;
+    }
+    for (i=0; i<numsamp; i++)
+	data[i].r=A*cos(2.0*PI*freq*i/fs - phase*PI/180);
+#endif
 #ifndef GEN
     for (i=0; i<N; i++)
     {
@@ -207,15 +235,21 @@ void main(int argc, char *argv[])
     }
 #endif    
 
+    gettimeofday(&start, (struct timezone *) 0);
     if (radix==2) radix2(data, N);
     if (radix==4) radix4(data, N);
-
+    gettimeofday(&end, (struct timezone *) 0);
+    totaltime=(end.tv_sec*1000000 + end.tv_usec)-(start.tv_sec*1000000
+						  + start.tv_usec);
     if (radix==2) bit_reverse_reorder(data, N);
     if (radix==4) bit_r4_reorder(data, N);
 
+    if (!dotime)
 	for (i=0; i<N; i++)
 	    printf("%f\n", sqrt(data[i].r*data[i].r +
 				data[i].i*data[i].i));
+    else
+	printf("%ld us\n\n", totaltime);
 
 #ifndef GEN
     fclose(infile);

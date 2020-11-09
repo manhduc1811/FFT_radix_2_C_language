@@ -1,11 +1,12 @@
-// mducng, SoC, D2D, g2touch
+// mducng, SoC, D2, G2touch
 // FFT version 5
 // Usage:
-// to complie: gcc -lm myFFTv5.c -o fft5
-// to run:     ./fft5 test32.txt 32
+// 		to complie: gcc -lm myFFTv5.c -o fft5
+// 		to run:     ./fft5 test64f.txt 64
 // FFT output in outFFT_real, outFFT_image
 // Radix-4 algorithm
-
+// *********************************************************
+// *********************************************************
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>

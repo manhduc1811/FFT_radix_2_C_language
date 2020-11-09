@@ -7,3 +7,5 @@
 
 4-Test data are designed by MATLAB
 
+Very good explanation of Mr. Michael J. Andrews from Convergent Technology Center.
+http://www.gweep.net/~rocko/FFT/ 
